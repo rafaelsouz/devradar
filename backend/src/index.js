@@ -1,5 +1,6 @@
 const express = require('express');
 const mogoose = require('mongoose');
+const routes = require('./routes');
 
 const app = express();
 
@@ -8,14 +9,10 @@ mogoose.connect('mongodb+srv://omnistack:omnistack@cluster0-u4uat.mongodb.net/te
     useUnifiedTopology:true,
 });
 
-app.use(express.json())
+app.use(express.json());
+app.use(routes);
+
+
 
 const PORT = 3333;
-
-app.get('/', ( req, res ) => {
-    return res.json({
-        message: 'Hello Omnistack'
-    })
-});
-
 app.listen(PORT);
