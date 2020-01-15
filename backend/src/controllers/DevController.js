@@ -1,5 +1,7 @@
 const axios = require('axios');
 const Dev = require('../models/Dev');
+const parseStringAsArray = require('../utils/parseStringAsArray');
+const parseCoordinatesAsLocation = require('../utils/parseCoordinatesAsLocation');
 
 module.exports = {
 
@@ -21,12 +23,9 @@ module.exports = {
         
             const { name = login, avatar_url, bio } = apiResponse.data;
         
-            const techsArray = techs.split(',').map( tech => tech.trim() );
+            const techsArray = parseStringAsArray(techs)
             
-            const location = {
-                type: 'Point',
-                coordinates: [longitude, latitude],
-            }
+            const location = parseCoordinatesAsLocation(longitude, latitude)
         
             const dev = await Dev.create({
                 github_username,
@@ -41,5 +40,50 @@ module.exports = {
         }
     
         return res.json(dev)
-    }
+    },
+
+    async update(req, res){
+
+        const { github_username } = req.query;
+        const { name, avatar_url, bio, techs, latitude, longitude } = req.body;
+
+        console.log(github_username);
+        
+        let dev = await Dev.findOne({ github_username });
+
+        if(dev){
+            
+            const techsArray = parseStringAsArray(techs)
+
+            const location = parseCoordinatesAsLocation(longitude, latitude)
+
+            const dev = await Dev.updateOne({
+                name,
+                avatar_url,
+                bio,
+                techs: techsArray,
+                location,
+            });
+
+            return res.json(dev)
+        }
+
+        return res.json({message: 'Dev não encontrado'});
+    },
+
+    async destroy(req, res){
+        
+        const { github_username } = req.query;
+
+        let dev = await Dev.findOne({ github_username });
+
+        if(dev){
+
+            await Dev.deleteOne({github_username})
+            
+            return res.json({ message: "Dev deletado com sucesso" })
+        }
+
+        return res.json({ message: "Dev não encontrado" })
+    },
 }

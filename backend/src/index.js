@@ -7,6 +7,8 @@ const app = express();
 mogoose.connect('mongodb+srv://omnistack:omnistack@cluster0-u4uat.mongodb.net/test?retryWrites=true&w=majority',{
     useNewUrlParser: true,
     useUnifiedTopology:true,
+    useFindAndModify: false,
+    useCreateIndex: true,
 });
 
 app.use(express.json());
