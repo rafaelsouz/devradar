@@ -1,5 +1,5 @@
 aside {
-    width: 320px;
+    width: 470px;
     background: #FFF;
     box-shadow: 0 0 14px 0 rgba(0, 0, 0, 0.02);
     border-radius: 2px;
@@ -33,10 +33,11 @@ aside form .input-group .input-block {
 }
 
 aside form .input-block label {
-    color: #ACACAC;
+    color: #818181;
     font-size: 14px;
     font-weight: bold;
     display: block;
+    margin-bottom: 3px;
 }
 
 aside form .input-block input {
