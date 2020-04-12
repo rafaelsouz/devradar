@@ -10,7 +10,8 @@ const server = http.Server(app);
 
 setupWebSocket(server);
 
-mogoose.connect('mongodb+srv://omnistack:omnistack@cluster0-u4uat.mongodb.net/test?retryWrites=true&w=majority',{
+// Incluir sua conexão com banco.
+mogoose.connect('mongodb+srv://<username>:<password>@cluster0-u4uat.mongodb.net/test?retryWrites=true&w=majority',{
     useNewUrlParser: true,
     useUnifiedTopology:true,
     useFindAndModify: false,
